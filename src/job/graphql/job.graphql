@@ -1,0 +1,31 @@
+scalar JSON
+
+type Job {
+  id: String!
+  title: String!
+  description: String!
+  info: JSON
+}
+
+input JobCreateInput {
+  title: String!
+  description: String!
+  info: JSON
+}
+
+input JobUpdateInput {
+  title: String!
+  description: String!
+  info: JSON
+}
+
+type Query {
+  getJobs: [Job]
+  getJob(id: Int!): Job
+}
+
+type Mutation {
+  createJob(input: JobCreateInput): Job
+  updateJob(id: Int!, input: JobUpdateInput): Job
+  deleteJob(id: Int!): Job
+}

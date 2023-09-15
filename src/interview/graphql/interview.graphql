@@ -1,0 +1,43 @@
+scalar Date
+
+type Interview {
+    id: Int!
+    candidateId: Int!
+    employeeId: Int!
+    applicationId: Int!
+    startDate: Date
+    endDate: Date
+    feedback: JSON
+    round: Int!
+    status: String!
+    next: Int
+    prev: Int
+}
+
+input CreateInterviewInput {
+    candidateId: Int!
+    employeeId: Int!
+    applicationId: Int!
+    startDate: Date
+    endDate: Date
+    round: Int!
+    status: String!
+    prev: Int
+}
+
+input UpdateInterviewInput {
+    startDate: Date
+    endDate: Date
+    status: String
+}
+
+type Query {
+    getAllInterviews: [Interview]
+    getInterview(id: Int!): Interview
+}
+
+type Mutation {
+    createInterview(input: CreateInterviewInput!): Interview
+    updateInterview(id: Int!, input: UpdateInterviewInput!): Interview
+    deleteInterview(id: Int!): Interview
+}

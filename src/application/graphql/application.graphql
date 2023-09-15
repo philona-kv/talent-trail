@@ -1,0 +1,16 @@
+scalar Date
+type Application{
+   id:ID!
+  candidateId: String!
+  jobId: String!
+  referredBy: String
+  status: String!
+  appliedDate: Date
+  candidate:JSON
+  referrer:JSON
+}
+
+
+type Query {
+  getAllReferred:[Application!]
+}
