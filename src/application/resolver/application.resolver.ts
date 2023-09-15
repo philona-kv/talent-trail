@@ -20,7 +20,7 @@ export class ApplicationResolver {
   }
 
   @Query()
-  findApplications(filter?:ApplicationFilter){
+  findApplications(filter?: ApplicationFilter) {
     return this.applicationService.findApplications(filter);
   }
 
