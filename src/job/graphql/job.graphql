@@ -9,6 +9,9 @@ type Job {
   title: String!
   description: String!
   location:Location
+  createdAt:Date
+  status: String
+  applicants: Int
   info: JSON
 }
 

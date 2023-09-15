@@ -24,6 +24,9 @@ class Job extends BaseEntity {
 
   @Column()
   categoryId: number;
+
+  @Column({ nullable: true })
+  status?: string;
 }
 
 export default Job;

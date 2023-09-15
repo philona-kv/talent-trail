@@ -263,6 +263,9 @@ export interface Job {
     title: string;
     description: string;
     location?: Location;
+    createdAt?: Date;
+    status?: string;
+    applicants?: number;
     info?: JSON;
 }
 

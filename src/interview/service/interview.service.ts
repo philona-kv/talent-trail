@@ -5,7 +5,7 @@ import {
   forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import Interview from '../entity/interview.entity';
 import { InterviewNotfound } from '../exception/interview.exception';
 import PreferredSlot from '../entity/preferred.slot.entity';
@@ -43,6 +43,7 @@ export class InterviewService {
     return this.interviewRepository.find({
       where: {
         ...filter,
+        employeeId: Not(IsNull()),
       },
       order: {
         createdAt: 'ASC',
@@ -218,10 +219,11 @@ export class InterviewService {
       application.id,
       timeline,
     );
-    return this.preferredSlotRepository.save({
+    await this.preferredSlotRepository.save({
       ...preferredSlot,
       startDate,
       endDate,
     });
+    return assignedInterview;
   }
 }

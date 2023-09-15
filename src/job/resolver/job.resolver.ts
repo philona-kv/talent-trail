@@ -1,4 +1,11 @@
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import Job from '../entity/job.entity'; // Update the import path
 import { JobService } from '../service/job.service'; // Update the service import
 import {
@@ -6,15 +13,17 @@ import {
   JobUpdateInput, // Update the input type
 } from '../../schema/graphql.schema';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { JobNotFoundException } from '../exception/job.exception'; // Update the exception class
-import { Authenticate } from 'src/authentication/decorator/authentication.decorator';
+import { ApplicationService } from '../../application/service/application.service';
 
 // @Authenticate()
 @Resolver('Job') // Update the resolver name
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class JobResolver {
   // Update the resolver class name
-  constructor(private jobService: JobService) {}
+  constructor(
+    private jobService: JobService,
+    private applicationService: ApplicationService,
+  ) {}
 
   @Query()
   getJobs(@Args('attributes') attributes: Partial<Job>): Promise<Job[]> {
@@ -52,5 +61,13 @@ export class JobResolver {
   deleteJob(@Args('id') id: number): Promise<Job> {
     // Update the argument name
     return this.jobService.deleteJob(id); // Update the service method call
+  }
+
+  @ResolveField('applicants')
+  async _applicants(job: Job) {
+    const applications = await this.applicationService.findApplications({
+      jobId: job.id,
+    });
+    return applications.length;
   }
 }

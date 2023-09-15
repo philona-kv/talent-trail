@@ -5,7 +5,6 @@ import { InterviewService } from './interview.service';
 import { ApplicationService } from '../../application/service/application.service';
 import { JobService } from '../../job/service/job.service';
 import Category from '../entity/category.entity';
-import { EmployeeService } from '../../employee/service/employee.service';
 import Interviewer from '../entity/interviewer.entity';
 import Employee from '../../employee/entity/employee.entity';
 import * as _ from 'lodash';
