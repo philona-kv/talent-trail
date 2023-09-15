@@ -7,11 +7,15 @@ type Document {
     url: String
 }
 
+enum DocumentType {
+    RESUME
+}
+
 input CreateDocumentInput {
     entityName: String!
     entityId: Int!
     key: String!
-    type: String!
+    type: DocumentType!
 }
 
 type DocumentUrlResponse {
