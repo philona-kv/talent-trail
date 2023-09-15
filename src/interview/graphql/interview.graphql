@@ -13,7 +13,13 @@ type Interview {
     next: Int
     prev: Int
 }
-
+type InterviewSlot{
+    slotId: Int!
+    userId: Int!
+    status: String!
+    rejectionReason:String
+   
+}
 input CreateInterviewInput {
     candidateId: Int!
     employeeId: Int!
@@ -23,6 +29,28 @@ input CreateInterviewInput {
     round: Int!
     status: String!
     prev: Int
+}
+input CreateInterviewSlotInput{
+    slotId: Int!
+    userId: Int!
+    status: String!
+    rejectionReason:String
+   
+}
+input UpdateInterviewSlotInput{
+    slotId: Int!
+    userId: Int!
+    status: String
+    rejectionReason:String
+
+   
+}
+
+input getUniqueInterviewSlotInput{
+    slotId: Int!
+    userId: Int!
+
+   
 }
 
 input UpdateInterviewInput {
@@ -34,10 +62,16 @@ input UpdateInterviewInput {
 type Query {
     getAllInterviews: [Interview]
     getInterview(id: Int!): Interview
+    getAllInterviewSlots: [InterviewSlot]
+    getInterviewSlot(input:getUniqueInterviewSlotInput): InterviewSlot
+
 }
 
 type Mutation {
     createInterview(input: CreateInterviewInput!): Interview
     updateInterview(id: Int!, input: UpdateInterviewInput!): Interview
     deleteInterview(id: Int!): Interview
+    createInterviewSlot(input: CreateInterviewSlotInput!): InterviewSlot
+    updateInterviewSlot(input: UpdateInterviewSlotInput!): InterviewSlot
+    deleteInterviewSlot(input:getUniqueInterviewSlotInput): InterviewSlot
 }

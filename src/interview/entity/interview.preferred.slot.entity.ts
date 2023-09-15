@@ -12,8 +12,8 @@ class InterviewerVsPreferredSlot extends BaseEntity {
   @Column()
   status!: string;
 
-  @Column()
-  rejectionReason: string;
+  @Column({ nullable: true })
+  rejectionReason?: string;
 }
 
 export default InterviewerVsPreferredSlot;
