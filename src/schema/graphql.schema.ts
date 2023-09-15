@@ -135,15 +135,15 @@ export interface IQuery {
     getLoggedInUser(): User | Promise<User>;
     getCandidates(): Candidate[] | Promise<Candidate[]>;
     getCandidate(id: number): Candidate | Promise<Candidate>;
+    getHotProfiles(skills?: string[]): Candidate[] | Promise<Candidate[]>;
     getDocumentUploadUrl(key: string): DocumentUrlResponse | Promise<DocumentUrlResponse>;
     getDocumentById(id?: number): Document | Promise<Document>;
-    getHotProfiles(skills?: string[]): Candidate[] | Promise<Candidate[]>;
     getEmployees(): Employee[] | Promise<Employee[]>;
     getEmployee(id: number): Employee | Promise<Employee>;
     getAllInterviews(): Interview[] | Promise<Interview[]>;
     getInterview(id: number): Interview | Promise<Interview>;
     getAllInterviewSlots(): InterviewSlot[] | Promise<InterviewSlot[]>;
-    getInterviewSlot(input?: getUniqueInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
+    getInterviewSlot(input?: GetUniqueInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
     getJobs(attributes?: JobAttributes): Job[] | Promise<Job[]>;
     getJob(id: number): Job | Promise<Job>;
 }
@@ -169,7 +169,7 @@ export interface IMutation {
     deleteInterview(id: number): Interview | Promise<Interview>;
     createInterviewSlot(input: CreateInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
     updateInterviewSlot(input: UpdateInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
-    deleteInterviewSlot(input?: getUniqueInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
+    deleteInterviewSlot(input?: GetUniqueInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
     createJob(input?: JobCreateInput): Job | Promise<Job>;
     updateJob(id: number, input?: JobUpdateInput): Job | Promise<Job>;
     deleteJob(id: number): Job | Promise<Job>;

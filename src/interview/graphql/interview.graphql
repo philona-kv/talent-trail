@@ -13,13 +13,14 @@ type Interview {
     next: Int
     prev: Int
 }
+
 type InterviewSlot{
     slotId: Int!
     userId: Int!
     status: String!
     rejectionReason:String
-   
 }
+
 input CreateInterviewInput {
     candidateId: Int!
     employeeId: Int!
@@ -30,27 +31,24 @@ input CreateInterviewInput {
     status: String!
     prev: Int
 }
+
 input CreateInterviewSlotInput{
     slotId: Int!
     userId: Int!
     status: String!
     rejectionReason:String
-   
 }
+
 input UpdateInterviewSlotInput{
     slotId: Int!
     userId: Int!
     status: String
     rejectionReason:String
-
-   
 }
 
-input getUniqueInterviewSlotInput{
+input GetUniqueInterviewSlotInput{
     slotId: Int!
     userId: Int!
-
-   
 }
 
 input UpdateInterviewInput {
@@ -63,7 +61,7 @@ type Query {
     getAllInterviews: [Interview]
     getInterview(id: Int!): Interview
     getAllInterviewSlots: [InterviewSlot]
-    getInterviewSlot(input:getUniqueInterviewSlotInput): InterviewSlot
+    getInterviewSlot(input:GetUniqueInterviewSlotInput): InterviewSlot
 
 }
 
@@ -73,5 +71,5 @@ type Mutation {
     deleteInterview(id: Int!): Interview
     createInterviewSlot(input: CreateInterviewSlotInput!): InterviewSlot
     updateInterviewSlot(input: UpdateInterviewSlotInput!): InterviewSlot
-    deleteInterviewSlot(input:getUniqueInterviewSlotInput): InterviewSlot
+    deleteInterviewSlot(input:GetUniqueInterviewSlotInput): InterviewSlot
 }
