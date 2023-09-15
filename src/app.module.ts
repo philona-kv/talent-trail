@@ -13,6 +13,7 @@ import { InterviewModule } from './interview/interview.module';
 import { JobModule } from './job/job.module';
 import { DocumentModule } from './document/document.module';
 import { CommonModule } from './common/common.module';
+import { AWSModule } from './aws/aws.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { CommonModule } from './common/common.module';
         JWT_SECRET: Joi.string().required().min(10),
       }),
     }),
+    AWSModule,
     DatabaseModule,
     AppGraphQLModule,
     NotificationModule,

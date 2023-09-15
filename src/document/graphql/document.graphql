@@ -1,0 +1,30 @@
+type Document {
+    id: Int
+    entityName: String
+    entityId: Int
+    key: String
+    type: String
+    url: String
+}
+
+input CreateDocumentInput {
+    entityName: String!
+    entityId: Int!
+    key: String!
+    type: String!
+}
+
+type DocumentUrlResponse {
+    key: String
+    url: String
+    extension: String
+}
+
+type Query {
+    getDocumentUploadUrl(key: String!): DocumentUrlResponse
+    getDocumentById(id: Int): Document
+}
+
+type Mutation {
+    createDocument(input: CreateDocumentInput): Document
+}
