@@ -1,0 +1,38 @@
+scalar JSON
+
+type Candidate {
+  id: String!
+  name: String!
+  age: Int!
+  email: String!
+  phone: String!
+  info: JSON
+  onboardingInfo: JSON
+}
+
+input CandidateCreateInput {
+  name: String!
+  age: Int!
+  email: String!
+  phone: String!
+  password: String!
+}
+
+input CandidateUpdateInput {
+  name: String
+  age: Int
+  email: String
+  phone: String
+  password: String
+}
+
+type Query {
+  getCandidates: [Candidate]
+  getCandidate(id: Int!): Candidate
+}
+
+type Mutation {
+  candidateSignUp(input: CandidateCreateInput): Candidate
+  updateCandidate(id: Int!, input: CandidateUpdateInput): Candidate
+  deleteCandidate(id: Int!): Candidate
+}
