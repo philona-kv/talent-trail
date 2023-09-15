@@ -76,4 +76,9 @@ export class InterviewResolver {
   schedule(@Args('id') applicationId: number) {
     return this.interviewSchedulerService.schedule(applicationId);
   }
+
+  @Query()
+  getAllCategory(){
+    return this.interviewSchedulerService.getAllCategory();
+  }
 }

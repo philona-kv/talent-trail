@@ -11,6 +11,7 @@ type Job {
   location:Location
   info: JSON
 }
+
 input JobAttributes {
   title: String
   description: String
@@ -26,8 +27,10 @@ input JobCreateInput {
   title: String!
   description: String!
   location:LocationInput
+  categoryId:Int!
   info: JSON
 }
+
 
 input JobUpdateInput {
   title: String!

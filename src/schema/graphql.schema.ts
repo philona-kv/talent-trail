@@ -1,3 +1,4 @@
+
 /*
  * ------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -111,6 +112,7 @@ export interface JobCreateInput {
     title: string;
     description: string;
     location?: LocationInput;
+    categoryId: number;
     info?: JSON;
 }
 
@@ -148,6 +150,7 @@ export interface IQuery {
     getInterview(id: number): Interview | Promise<Interview>;
     getAllInterviewSlots(): InterviewSlot[] | Promise<InterviewSlot[]>;
     getInterviewSlot(input?: GetUniqueInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
+    getAllCategory(): Category[] | Promise<Category[]>;
     getJobs(attributes?: JobAttributes): Job[] | Promise<Job[]>;
     getJob(id: number): Job | Promise<Job>;
 }
@@ -232,6 +235,11 @@ export interface InterviewSlot {
     userId: number;
     status: string;
     rejectionReason?: string;
+}
+
+export interface Category {
+    id: string;
+    name: string;
 }
 
 export interface Location {

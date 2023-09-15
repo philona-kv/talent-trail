@@ -98,4 +98,9 @@ export class InterviewSchedulerService {
 
     return interview;
   }
+
+
+  getAllCategory(){
+    return this.categoryRepo.find();
+  }
 }

@@ -21,6 +21,10 @@ class Job extends BaseEntity {
 
   @Column({ type: 'jsonb', nullable: true })
   info: JobInfo;
+
+
+  @Column()
+  categoryId:number
 }
 
 export default Job;

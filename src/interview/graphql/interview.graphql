@@ -57,11 +57,17 @@ input UpdateInterviewInput {
     status: String
 }
 
+type Category{
+id:ID!
+name:String!
+}
+
 type Query {
     getAllInterviews: [Interview]
     getInterview(id: Int!): Interview
     getAllInterviewSlots: [InterviewSlot]
     getInterviewSlot(input:GetUniqueInterviewSlotInput): InterviewSlot
+    getAllCategory:[Category!]!
 
 }
 
