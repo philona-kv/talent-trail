@@ -10,10 +10,11 @@ import {
   UpdateInterviewSlotInput,
 } from '../../schema/graphql.schema';
 import InterviewerVsPreferredSlot from '../entity/interview.preferred.slot.entity';
+import { InterviewSchedulerService } from '../service/interview.scheduler.service';
 
 @Injectable()
 export class InterviewResolver {
-  constructor(private interviewService: InterviewService) {}
+  constructor(private interviewService: InterviewService,private interviewSchedulerService:InterviewSchedulerService) {}
 
   @Query()
   getAllInterviews(): Promise<Interview[]> {
@@ -66,5 +67,10 @@ export class InterviewResolver {
   @Mutation()
   deleteInterviewSlot(@Args('input') input: GetUniqueInterviewSlotInput) {
     return this.interviewService.removeSlot(input);
+  }
+
+  @Mutation()
+  schedule(@Args('id') applicationId:number){
+    return this.interviewSchedulerService.schedule(applicationId);
   }
 }

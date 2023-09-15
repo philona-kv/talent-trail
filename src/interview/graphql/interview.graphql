@@ -72,4 +72,5 @@ type Mutation {
     createInterviewSlot(input: CreateInterviewSlotInput!): InterviewSlot
     updateInterviewSlot(input: UpdateInterviewSlotInput!): InterviewSlot
     deleteInterviewSlot(input:GetUniqueInterviewSlotInput): InterviewSlot
+    schedule(id:Int):Interview
 }

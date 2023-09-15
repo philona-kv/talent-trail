@@ -18,7 +18,7 @@ class Employee extends BaseEntity {
   @Column()
   password!: string;
 
-  @Column({ type: 'array' })
+  @Column({ type: 'text', array: true, nullable: true })
   skills: string[];
 
   @Column()

@@ -9,7 +9,7 @@ import {
 import { JobNotFoundException } from '../exception/job.exception'; // Update the exception class
 import { Authenticate } from 'src/authentication/decorator/authentication.decorator';
 
-@Authenticate()
+// @Authenticate()
 @Resolver('Job') // Update the resolver name
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class JobResolver {
@@ -35,7 +35,7 @@ export class JobResolver {
     @Context('user') user: any,
   ): Promise<Job> {
     // Update the return type
-    return this.jobService.createJob({ ...input, createdBy: Number(user.id) }); // Update the service method call
+    return this.jobService.createJob({ ...input, createdBy: Number(user?.id) }); // Update the service method call
   }
 
   @Mutation()

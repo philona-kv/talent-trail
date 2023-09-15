@@ -23,6 +23,10 @@ export class EmployeeService {
     return this.employeeRepository.findOne(id);
   }
 
+  public filterEmployee(filter: Partial<Employee>) {
+    return this.employeeRepository.find(filter);
+  }
+
   public createEmployee(input: EmployeeCreateInput) {
     const newRecord = this.employeeRepository.create(input);
     return this.employeeRepository.save(newRecord);

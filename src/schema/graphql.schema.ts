@@ -175,6 +175,7 @@ export interface IMutation {
     createInterviewSlot(input: CreateInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
     updateInterviewSlot(input: UpdateInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
     deleteInterviewSlot(input?: GetUniqueInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
+    schedule(id?: number): Interview | Promise<Interview>;
     createJob(input?: JobCreateInput): Job | Promise<Job>;
     updateJob(id: number, input?: JobUpdateInput): Job | Promise<Job>;
     deleteJob(id: number): Job | Promise<Job>;

@@ -23,6 +23,18 @@ export class InterviewService {
     return this.interviewRepository.find();
   }
 
+
+  filterInterview(filter:Partial<Interview>){
+    return this.interviewRepository.find({
+      where:{
+        ...filter
+      },
+      order:{
+        createdAt:'ASC'
+      }
+    });
+  }
+
   async findOne(id: number): Promise<Interview> {
     const interview = await this.interviewRepository.findOne(id);
     if (!interview) {
