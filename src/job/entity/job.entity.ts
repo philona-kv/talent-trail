@@ -10,6 +10,9 @@ class Job extends BaseEntity {
   @Column()
   title!: string;
 
+  @Column({ nullable: true })
+  overview?: string;
+
   @Column()
   description!: string;
 
@@ -27,6 +30,9 @@ class Job extends BaseEntity {
 
   @Column({ nullable: true })
   status?: string;
+
+  @Column({ nullable: true })
+  jobType?: string;
 }
 
 export default Job;
