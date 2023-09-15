@@ -7,6 +7,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
+    "postbuild": "npm run copy-resources",
+    "copy-resources": "cp -r src/templates dist/templates",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -42,6 +44,7 @@
     "cookie-parser": "^1.4.6",
     "graphql": "^15.5.0",
     "jsonwebtoken": "^9.0.2",
+    "mustache": "^4.2.0",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.6.6",
@@ -51,10 +54,10 @@
     "typeorm-naming-strategies": "^2.0.0"
   },
   "devDependencies": {
+    "@nestjs/axios": "0.0.1",
     "@nestjs/cli": "^7.6.0",
     "@nestjs/schematics": "^7.3.1",
     "@nestjs/testing": "^7.6.15",
-    "@nestjs/axios": "0.0.1",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.4",
     "@types/express": "^4.17.11",
