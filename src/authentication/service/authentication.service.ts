@@ -1,5 +1,9 @@
 import { Repository } from 'typeorm';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as jwt from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
@@ -9,6 +13,7 @@ import Employee from '../../employee/entity/employee.entity';
 import { LoginInput } from '../../schema/graphql.schema';
 import { GroupNames } from '../../common/constants/group.constants';
 import { CommonUtil } from '../../common/util/common.util';
+import e from 'express';
 
 @Injectable()
 export class AuthenticationService {
@@ -41,6 +46,7 @@ export class AuthenticationService {
       if (!isPasswordValid) throw new UnauthorizedException('Wrong password');
       return this.generateToken(candidate, [GroupNames.CANDIDATE]);
     }
+    throw new BadRequestException(`Invalid credentials`);
   }
 
   private getCookieConfiguration() {
@@ -78,5 +84,16 @@ export class AuthenticationService {
     const secret = this.configService.get('JWT_SECRET');
     const verificationResponse: any = jwt.verify(token, secret);
     return verificationResponse;
+  }
+
+  async getLoggedInUserDetails(user: any) {
+    const { id, groups } = user;
+    let userDetails: Candidate | Employee;
+    if (groups.includes(GroupNames.CANDIDATE)) {
+      userDetails = await this.candidateRepository.findOne(id);
+    } else {
+      userDetails = await this.employeeRepository.findOne(id);
+    }
+    return { ...userDetails, groups };
   }
 }

@@ -1,3 +1,4 @@
+
 /*
  * ------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -63,6 +64,7 @@ export interface JobAttributes {
     description?: string;
     info?: JSON;
 }
+
 export interface LocationInput {
     country?: string;
     state?: string;
@@ -96,6 +98,7 @@ export interface Application {
 
 export interface IQuery {
     getAllReferred(): Application[] | Promise<Application[]>;
+    getLoggedInUser(): User | Promise<User>;
     getCandidates(): Candidate[] | Promise<Candidate[]>;
     getCandidate(id: number): Candidate | Promise<Candidate>;
     getEmployees(): Employee[] | Promise<Employee[]>;
@@ -104,6 +107,12 @@ export interface IQuery {
     getInterview(id: number): Interview | Promise<Interview>;
     getJobs(attributes?: JobAttributes): Job[] | Promise<Job[]>;
     getJob(id: number): Job | Promise<Job>;
+}
+
+export interface User {
+    id?: number;
+    email?: string;
+    groups?: string[];
 }
 
 export interface IMutation {

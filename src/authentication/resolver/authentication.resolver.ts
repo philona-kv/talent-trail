@@ -1,6 +1,7 @@
-import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { LoginInput } from '../../schema/graphql.schema';
 import { AuthenticationService } from '../service/authentication.service';
+import { Authenticate } from '../decorator/authentication.decorator';
 
 @Resolver()
 export class AuthenticationResolver {
@@ -20,5 +21,11 @@ export class AuthenticationResolver {
   logout(@Context('res') res: any): string {
     this.authenticationService.clearCookie(res);
     return 'User successfully logged out';
+  }
+
+  @Authenticate()
+  @Query()
+  getLoggedInUser(@Context('user') user: any) {
+    return this.authenticationService.getLoggedInUserDetails(user);
   }
 }

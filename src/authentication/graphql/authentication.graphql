@@ -3,6 +3,16 @@ input LoginInput {
     password: String!
 }
 
+type User {
+    id: Int
+    email: String
+    groups: [String]
+}
+
+type Query {
+    getLoggedInUser: User
+}
+
 type Mutation {
     login(input: LoginInput!): String
     logout: String

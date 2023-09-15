@@ -26,7 +26,10 @@ export class AuthGuard implements CanActivate {
     }
     ctx.user = await this.authenticationService.validateToken(token);
     const groups = this.reflector.get<string[]>('groups', context.getHandler());
-    if (!groups.some((group) => ctx.user.groups.includes(group))) {
+    if (
+      groups.length &&
+      !groups.some((group) => ctx.user.groups.includes(group))
+    ) {
       return false;
     }
     return true;
