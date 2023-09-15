@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Not, Repository } from 'typeorm';
 import Application from '../entity/application.entity';
+import { ApplicationFilter } from '../../schema/graphql.schema';
 
 @Injectable()
 export class ApplicationService {
@@ -25,6 +26,10 @@ export class ApplicationService {
         referredBy: Not(IsNull()), // Use IsNull() to generate "IS NOT NULL"
       },
     });
+  }
+
+  async findApplications(filter:ApplicationFilter){
+    return this.applicationRepository.find(filter);
   }
 
   async findByReferredBy(referredBy: number): Promise<Application[]> {

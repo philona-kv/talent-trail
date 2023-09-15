@@ -7,6 +7,12 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export interface ApplicationFilter {
+    applicantId?: number;
+    jobId?: number;
+    referredBy?: number;
+}
+
 export interface LoginInput {
     email: string;
     password: string;
@@ -98,6 +104,7 @@ export interface Application {
 
 export interface IQuery {
     getAllReferred(): Application[] | Promise<Application[]>;
+    findApplications(filter?: ApplicationFilter): Application[] | Promise<Application[]>;
     getLoggedInUser(): User | Promise<User>;
     getCandidates(): Candidate[] | Promise<Candidate[]>;
     getCandidate(id: number): Candidate | Promise<Candidate>;
