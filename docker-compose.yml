@@ -1,0 +1,54 @@
+version: "3"
+services:
+  postgres:
+    container_name: postgres_misfits
+    image: postgres:14
+    ports:
+    - "5555:5432"
+    volumes:
+    - postgresdata:/data/postgres_misfits
+    - postgresdbdata:/var/lib/postgresql_misfits/data
+    env_file:
+    - docker.env
+
+  localstack:
+    container_name: localstack_misfits
+    image: localstack/localstack:latest
+    ports:
+      - "5566-5576:4566-4576"
+      - "4599:4599"
+    environment:
+      - HOSTNAME=localstack
+      - SERVICES=s3:4574,sns:4575,sqs:4576
+      - PORT_WEB_UI=4599
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/localstack:/tmp/localstack
+
+  setup-resources:
+    image: amazon/aws-cli
+    volumes:
+      - ./dev_env:/project/dev_env
+    environment:
+      - AWS_ACCESS_KEY_ID=AKIAEXAMPLE123
+      - AWS_SECRET_ACCESS_KEY=AWSSECRETACCESSEY123
+      - AWS_DEFAULT_REGION=us-east-1
+    entrypoint: /bin/sh -c
+    command: >
+      "
+        sleep 20
+        # Executing SQS
+        aws sqs create-queue --endpoint-url=http://localstack:4566 --queue-name job-hunter;
+
+        # Creating S3
+        aws --endpoint-url=http://localstack:4566 s3 mb s3://job-hunter
+      "
+    depends_on:
+      - localstack
+
+
+volumes:
+  postgresdata:
+    driver: local
+  postgresdbdata:
+    driver: local
