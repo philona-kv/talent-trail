@@ -12,8 +12,18 @@ import Category from './entity/category.entity';
 import Employee from '../employee/entity/employee.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Interview,InterviewerVsPreferredSlot,Interviewer,Category,Employee]),JobModule,ApplicationModule],
-  providers: [InterviewResolver, InterviewService,InterviewSchedulerService],
+  imports: [
+    TypeOrmModule.forFeature([
+      Interview,
+      InterviewerVsPreferredSlot,
+      Interviewer,
+      Category,
+      Employee,
+    ]),
+    JobModule,
+    ApplicationModule,
+  ],
+  providers: [InterviewResolver, InterviewService, InterviewSchedulerService],
   exports: [],
 })
 export class InterviewModule {}

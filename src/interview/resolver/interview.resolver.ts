@@ -14,7 +14,10 @@ import { InterviewSchedulerService } from '../service/interview.scheduler.servic
 
 @Injectable()
 export class InterviewResolver {
-  constructor(private interviewService: InterviewService,private interviewSchedulerService:InterviewSchedulerService) {}
+  constructor(
+    private interviewService: InterviewService,
+    private interviewSchedulerService: InterviewSchedulerService,
+  ) {}
 
   @Query()
   getAllInterviews(): Promise<Interview[]> {
@@ -70,7 +73,7 @@ export class InterviewResolver {
   }
 
   @Mutation()
-  schedule(@Args('id') applicationId:number){
+  schedule(@Args('id') applicationId: number) {
     return this.interviewSchedulerService.schedule(applicationId);
   }
 }

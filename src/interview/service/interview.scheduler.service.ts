@@ -39,7 +39,7 @@ export class InterviewSchedulerService {
     const interviews = await this.interviewService.filterInterview({
       applicationId,
     });
-    const lastRound = interviews[interviews.length - 1].round;
+    const lastRound = interviews[interviews.length - 1]?.round || 0;
 
     const interviewTakenEmplyees = interviews.map(
       (interview) => interview.employeeId,
@@ -49,22 +49,34 @@ export class InterviewSchedulerService {
       (emp) => emp.employeeId,
     );
 
-    const employees = await this.employeeRepo
+    if (!eligibleEmployeeIds.length) {
+      throw new Error('unable to find eligible interviewer');
+    }
+    const employeeQuery = await this.employeeRepo
       .createQueryBuilder('emp')
       .where(`emp.id IN (:...empIds)`, { empIds: eligibleEmployeeIds })
-      .andWhere('emp.id NOT IN(:...interviewTakenEmplyees)', {
-        interviewTakenEmplyees,
-      })
+
       .andWhere('emp.skills && :candidateSkills')
       .andWhere('emp.experience > :experience', {
         experience: experienceRequired,
-      })
+      });
+    if (interviewTakenEmplyees.length) {
+      employeeQuery.andWhere('emp.id NOT IN(:...interviewTakenEmplyees)', {
+        interviewTakenEmplyees,
+      });
+    }
+    employeeQuery
       .addOrderBy(`ABS(emp.experience - :experience)`, 'ASC')
       .setParameter(
         'candidateSkills',
         skillsRequired.map((skill) => skill.toUpperCase()),
-      )
-      .getMany();
+      );
+
+    const employees = await employeeQuery.getMany();
+
+    if (!employees.length) {
+      throw new Error('unable to find eligible interviewer');
+    }
 
     const sortedEmployee = employees.sort((a: Employee, b: Employee) => {
       const diff = b.experience - a.experience;
@@ -76,7 +88,7 @@ export class InterviewSchedulerService {
       return bSkillDiff.length - aSkillDiff.length;
     });
 
-    await this.interviewService.create({
+    const interview = await this.interviewService.create({
       applicationId,
       candidateId: application.candidateId,
       employeeId: sortedEmployee[0].id,
@@ -84,6 +96,6 @@ export class InterviewSchedulerService {
       round: lastRound + 1,
     });
 
-    return sortedEmployee;
+    return interview;
   }
 }

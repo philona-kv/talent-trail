@@ -22,7 +22,7 @@ class Employee extends BaseEntity {
   skills: string[];
 
   @Column()
-  experience:number
+  experience: number;
 }
 
 export default Employee;

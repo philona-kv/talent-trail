@@ -15,6 +15,6 @@ import { JobModule } from '../job/job.module';
     JobModule,
   ],
   providers: [ApplicationService, ApplicationResolver],
-  exports:[ApplicationService]
+  exports: [ApplicationService],
 })
 export class ApplicationModule {}

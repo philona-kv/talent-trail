@@ -23,15 +23,14 @@ export class InterviewService {
     return this.interviewRepository.find();
   }
 
-
-  filterInterview(filter:Partial<Interview>){
+  filterInterview(filter: Partial<Interview>) {
     return this.interviewRepository.find({
-      where:{
-        ...filter
+      where: {
+        ...filter,
       },
-      order:{
-        createdAt:'ASC'
-      }
+      order: {
+        createdAt: 'ASC',
+      },
     });
   }
 
