@@ -2,6 +2,7 @@ import {
   Candidate as CandidateGql,
   CandidateCreateInput,
   CandidateUpdateInput,
+  Location,
 } from '../../schema/graphql.schema';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
@@ -14,6 +15,8 @@ import { CandidateNotFoundException } from '../exception/candidate.exception';
 import { Document } from '../../document/entity/document.entity';
 import { S3Service } from '../../aws/service/aws.s3.service';
 import * as blobUtil from 'blob-util';
+import * as Chance from 'chance';
+const chance = new Chance();
 
 @Injectable()
 export class CandidateService {
@@ -78,6 +81,14 @@ export class CandidateService {
       'GET',
       `${this.mockarooApi + this.apiKey}`,
     );
+
+    const location: Location[] = [
+      { state: 'kerala', country: 'india' },
+      { state: 'TamilNadu', country: 'india' },
+      { state: 'Texas', country: 'USA' },
+      { state: 'Ottawa', country: 'Canada' },
+      { state: 'Andra', country: 'India' },
+    ];
     const data: CandidateGql[] = [];
     mockedData.data.map((md) => {
       data.push({
@@ -86,6 +97,10 @@ export class CandidateService {
         email: md.email,
         id: md.id,
         phone: md.phone,
+        leetcode: chance.integer({ min: 5, max: 10 }),
+        github: chance.integer({ min: 1, max: 10 }),
+        location:
+          location[chance.integer({ min: 0, max: location.length - 1 })],
       });
     });
     return data;
@@ -126,13 +141,15 @@ export class CandidateService {
   }
 
   public async populateCandidateInfo(data: Document) {
-    const { key, entityId } = data
+    const { key, entityId } = data;
     const endpoint = this.configService.get('TALENT_TRAIL_AI_ENDPOINT', '');
     const url = endpoint.concat('/resume-summary');
     const file = await this.s3Service.fetchFile(key);
 
     const formData = new FormData();
-    const fileBlob = blobUtil.createBlob([file.Body], { type: file.ContentType });
+    const fileBlob = blobUtil.createBlob([file.Body], {
+      type: file.ContentType,
+    });
     formData.append('resume', fileBlob, key);
 
     const info: any = await axios({
@@ -141,7 +158,7 @@ export class CandidateService {
       data: formData,
       timeout: 10000000,
       headers: { 'Content-Type': 'multipart/form-data' },
-    })
+    });
     return this.candidateRepository.update(entityId, { info });
   }
 }

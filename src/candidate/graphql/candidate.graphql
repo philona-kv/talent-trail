@@ -7,6 +7,9 @@ type Candidate {
   email: String!
   phone: String!
   info: JSON
+  location:Location
+  leetcode:Int
+  github:Int
   onboardingInfo: JSON
 }
 

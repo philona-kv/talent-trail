@@ -203,6 +203,9 @@ export interface Candidate {
     email: string;
     phone: string;
     info?: JSON;
+    location?: Location;
+    leetcode?: number;
+    github?: number;
     onboardingInfo?: JSON;
 }
 
