@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import BaseEntity from '../../common/entity/base.entity';
+import { JobInfo } from '../types/job.info.types';
 
 @Entity()
 class Job extends BaseEntity {
@@ -19,7 +20,7 @@ class Job extends BaseEntity {
   };
 
   @Column({ type: 'jsonb', nullable: true })
-  info: any;
+  info: JobInfo;
 }
 
 export default Job;

@@ -15,6 +15,7 @@ input ApplicationFilter{
 applicantId:Int
 jobId:Int
 referredBy:Int
+status:String
 }
 
 
