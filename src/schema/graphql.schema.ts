@@ -51,6 +51,8 @@ export interface EmployeeCreateInput {
     email: string;
     role: string[];
     password: string;
+    skills?: string[];
+    experience: number;
 }
 
 export interface EmployeeUpdateInput {
