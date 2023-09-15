@@ -35,7 +35,7 @@ export class JobResolver {
     @Context('user') user: any,
   ): Promise<Job> {
     // Update the return type
-    return this.jobService.createJob({ ...input, createdBy: user.id }); // Update the service method call
+    return this.jobService.createJob({ ...input, createdBy: Number(user.id) }); // Update the service method call
   }
 
   @Mutation()

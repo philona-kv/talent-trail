@@ -30,7 +30,7 @@ export class JobService {
     return this.jobRepository.findOne(id); // Update the repository method call
   }
 
-  public createJob(input: JobCreateInput) {
+  public createJob(input: Partial<Job>) {
     // Update the method name and argument type
     const newRecord = this.jobRepository.create(
       { ...input },

@@ -14,8 +14,8 @@ class Job extends BaseEntity {
 
   @Column({ type: 'jsonb', nullable: true })
   location: {
-    city: string;
-    country: string;
+    state?: string;
+    country?: string;
   };
 
   @Column({ type: 'jsonb', nullable: true })
