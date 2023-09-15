@@ -70,4 +70,10 @@ export class JobResolver {
     });
     return applications.length;
   }
+
+  
+  @Mutation()
+  mockJob(){
+    return this.jobService.mockData();
+  }
 }

@@ -52,4 +52,5 @@ type Mutation {
   createJob(input: JobCreateInput): Job
   updateJob(id: Int!, input: JobUpdateInput): Job
   deleteJob(id: Int!): Job
+  mockJob:[Job]
 }

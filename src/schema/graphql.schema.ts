@@ -186,6 +186,7 @@ export interface IMutation {
     createJob(input?: JobCreateInput): Job | Promise<Job>;
     updateJob(id: number, input?: JobUpdateInput): Job | Promise<Job>;
     deleteJob(id: number): Job | Promise<Job>;
+    mockJob(): Job[] | Promise<Job[]>;
 }
 
 export interface User {
