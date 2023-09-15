@@ -13,6 +13,12 @@ class Job extends BaseEntity {
   description!: string;
 
   @Column({ type: 'jsonb', nullable: true })
+  location: {
+    city: string;
+    country: string;
+  };
+
+  @Column({ type: 'jsonb', nullable: true })
   info: any;
 }
 

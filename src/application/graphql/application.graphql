@@ -6,8 +6,9 @@ type Application{
   referredBy: String
   status: String!
   appliedDate: Date
-  candidate:JSON
-  referrer:JSON
+  candidate:Candidate!
+  referrer:Employee
+  job:Job
 }
 
 

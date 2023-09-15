@@ -3,13 +3,15 @@ import { ApplicationService } from '../service/application.service';
 import { EmployeeService } from '../../employee/service/employee.service';
 import Application from '../entity/application.entity';
 import { CandidateService } from '../../candidate/service/candidate.service';
+import { JobService } from '../../job/service/job.service';
 
-@Resolver()
+@Resolver('Application')
 export class ApplicationResolver {
   constructor(
     private readonly applicationService: ApplicationService,
     private readonly employeeService: EmployeeService,
     private readonly candidateService: CandidateService,
+    private readonly jobService: JobService,
   ) {}
   @Query()
   getAllReferred() {
@@ -25,5 +27,10 @@ export class ApplicationResolver {
   @ResolveField('candidate')
   _candidate(application: Application) {
     return this.candidateService.getCandidate(application.candidateId);
+  }
+
+  @ResolveField('job')
+  _job(application: Application) {
+    return this.jobService.getJob(application.jobId);
   }
 }
