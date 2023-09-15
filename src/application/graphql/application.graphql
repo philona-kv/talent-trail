@@ -1,26 +1,36 @@
 scalar Date
+
 type Application{
-   id:ID!
-  candidateId: String!
-  jobId: String!
+  id: Int!
+  candidateId: Int!
+  jobId: Int!
   referredBy: String
   status: String!
   appliedDate: Date
   candidate:Candidate!
   referrer:Employee
   job:Job
+  timeline: JSON
 }
 
 input ApplicationFilter{
-applicantId:Int
-jobId:Int
-referredBy:Int
-status:String
+  applicantId:Int
+  jobId:Int
+  referredBy:Int
+  status:String
 }
 
-
+input CreateApplicationInput {
+  candidateId: Int!
+  jobId: Int!
+}
 
 type Query {
   getAllReferred:[Application!]
   findApplications(filter:ApplicationFilter):[Application!]
+}
+
+type Mutation {
+  createApplication(input: CreateApplicationInput!): Application
+  hrStatusUpdate(applicationId: Int!, accepted: Boolean): Application
 }

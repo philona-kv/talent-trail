@@ -77,8 +77,21 @@ export class InterviewResolver {
     return this.interviewSchedulerService.schedule(applicationId);
   }
 
+  @Mutation()
+  submitPreferredSlot(
+    @Args('slotId') slotId: number,
+    @Args('startDate') startDate: Date,
+    @Args('endDate') endDate: Date,
+  ) {
+    return this.interviewService.submitPreferredSlot(
+      slotId,
+      startDate,
+      endDate,
+    );
+  }
+
   @Query()
-  getAllCategory(){
+  getAllCategory() {
     return this.interviewSchedulerService.getAllCategory();
   }
 }

@@ -9,17 +9,20 @@ class PreferredSlot extends BaseEntity {
   @Column()
   candidateId!: number;
 
-  @Column()
-  startDate: Date;
+  @Column({ nullable: true })
+  startDate?: Date;
 
-  @Column()
-  endDate: Date;
+  @Column({ nullable: true })
+  endDate?: Date;
 
   @Column()
   applicationId!: number;
 
   @Column()
   interviewId!: number;
+
+  @Column()
+  round!: number;
 }
 
 export default PreferredSlot;

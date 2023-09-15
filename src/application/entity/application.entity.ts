@@ -12,7 +12,7 @@ class Application extends BaseEntity {
   @Column()
   jobId: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   referredBy?: number;
 
   @Column()
@@ -20,6 +20,9 @@ class Application extends BaseEntity {
 
   @Column()
   appliedDate: Date;
+
+  @Column({ type: 'jsonb', nullable: true })
+  timeline?: any;
 }
 
 export default Application;

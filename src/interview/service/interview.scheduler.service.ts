@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { InterviewService } from './interview.service';
@@ -13,7 +13,9 @@ import * as _ from 'lodash';
 @Injectable()
 export class InterviewSchedulerService {
   constructor(
+    @Inject(forwardRef(() => InterviewService))
     private readonly interviewService: InterviewService,
+    @Inject(forwardRef(() => ApplicationService))
     private readonly applicationService: ApplicationService,
     private readonly jobService: JobService,
     @InjectRepository(Category)
@@ -29,10 +31,10 @@ export class InterviewSchedulerService {
     const application = await this.applicationService.findOne(applicationId);
     const { jobId } = application;
     const job = await this.jobService.getJob(jobId);
-    const { title, info } = job;
+    const { info, categoryId } = job;
     const { skills: skillsRequired, experience: experienceRequired } = info;
 
-    const requiredCategory = await this.categoryRepo.findOne({ name: title });
+    const requiredCategory = await this.categoryRepo.findOne(categoryId);
     const employeeWIthRequiredCategory = await this.interviewerRepo.find({
       categoryId: requiredCategory.id,
     });
@@ -99,8 +101,7 @@ export class InterviewSchedulerService {
     return interview;
   }
 
-
-  getAllCategory(){
+  getAllCategory() {
     return this.categoryRepo.find();
   }
 }

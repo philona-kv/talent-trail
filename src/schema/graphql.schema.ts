@@ -1,4 +1,3 @@
-
 /*
  * ------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -16,6 +15,11 @@ export interface ApplicationFilter {
     jobId?: number;
     referredBy?: number;
     status?: string;
+}
+
+export interface CreateApplicationInput {
+    candidateId: number;
+    jobId: number;
 }
 
 export interface LoginInput {
@@ -126,15 +130,16 @@ export interface JobUpdateInput {
 }
 
 export interface Application {
-    id: string;
-    candidateId: string;
-    jobId: string;
+    id: number;
+    candidateId: number;
+    jobId: number;
     referredBy?: string;
     status: string;
     appliedDate?: Date;
     candidate: Candidate;
     referrer?: Employee;
     job?: Job;
+    timeline?: JSON;
 }
 
 export interface IQuery {
@@ -157,14 +162,9 @@ export interface IQuery {
     getJob(id: number): Job | Promise<Job>;
 }
 
-export interface User {
-    id?: number;
-    email?: string;
-    name?: string;
-    groups?: string[];
-}
-
 export interface IMutation {
+    createApplication(input: CreateApplicationInput): Application | Promise<Application>;
+    hrStatusUpdate(applicationId: number, accepted?: boolean): Application | Promise<Application>;
     login(input: LoginInput): string | Promise<string>;
     logout(): string | Promise<string>;
     candidateSignUp(input?: CandidateCreateInput): Candidate | Promise<Candidate>;
@@ -181,9 +181,17 @@ export interface IMutation {
     updateInterviewSlot(input: UpdateInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
     deleteInterviewSlot(input?: GetUniqueInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
     schedule(id?: number): Interview | Promise<Interview>;
+    submitPreferredSlot(slotId: number, startDate?: Date, endDate?: Date): InterviewSlot | Promise<InterviewSlot>;
     createJob(input?: JobCreateInput): Job | Promise<Job>;
     updateJob(id: number, input?: JobUpdateInput): Job | Promise<Job>;
     deleteJob(id: number): Job | Promise<Job>;
+}
+
+export interface User {
+    id?: number;
+    email?: string;
+    name?: string;
+    groups?: string[];
 }
 
 export interface Candidate {

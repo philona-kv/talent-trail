@@ -9,8 +9,8 @@ class Interview extends BaseEntity {
   @Column()
   candidateId!: number;
 
-  @Column()
-  employeeId!: number;
+  @Column({ nullable: true })
+  employeeId?: number;
 
   @Column()
   applicationId!: number;

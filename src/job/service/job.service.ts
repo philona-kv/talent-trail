@@ -33,7 +33,11 @@ export class JobService {
   public createJob(input: Partial<Job>) {
     // Update the method name and argument type
     const newRecord = this.jobRepository.create(
-      { ...input },
+      {
+        ...input,
+        createdBy: 1,
+        updatedBy: 1,
+      },
       // Update the repository variable name
     );
     return this.jobRepository.save(newRecord); // Update the repository method call
