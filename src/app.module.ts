@@ -4,6 +4,7 @@ import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { CandidateModule } from './candidate/candidate.module';
 import { CommonModule } from './common/common.module';
+import { EmployeeModule } from './employee/employee.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CommonModule } from './common/common.module';
     DatabaseModule,
     CandidateModule,
     CommonModule,
+    EmployeeModule,
   ],
   providers: [],
 })
