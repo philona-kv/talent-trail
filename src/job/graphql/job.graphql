@@ -6,6 +6,11 @@ type Job {
   description: String!
   info: JSON
 }
+input JobAttributes {
+  title: String
+  description: String
+  info: JSON
+}
 
 input JobCreateInput {
   title: String!
@@ -20,8 +25,9 @@ input JobUpdateInput {
 }
 
 type Query {
-  getJobs: [Job]
+  getJobs(attributes: JobAttributes): [Job]
   getJob(id: Int!): Job
+
 }
 
 type Mutation {

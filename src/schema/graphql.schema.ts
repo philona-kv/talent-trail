@@ -59,6 +59,12 @@ export interface UpdateInterviewInput {
     status?: string;
 }
 
+export interface JobAttributes {
+    title?: string;
+    description?: string;
+    info?: JSON;
+}
+
 export interface JobCreateInput {
     title: string;
     description: string;
@@ -90,7 +96,7 @@ export interface IQuery {
     getEmployee(id: number): Employee | Promise<Employee>;
     getAllInterviews(): Interview[] | Promise<Interview[]>;
     getInterview(id: number): Interview | Promise<Interview>;
-    getJobs(): Job[] | Promise<Job[]>;
+    getJobs(attributes?: JobAttributes): Job[] | Promise<Job[]>;
     getJob(id: number): Job | Promise<Job>;
 }
 

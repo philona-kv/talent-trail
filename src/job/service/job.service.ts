@@ -18,9 +18,11 @@ export class JobService {
     private commonUtil: CommonUtil,
   ) {}
 
-  public getAllJobs() {
+  public getAllJobs(attributes: Partial<Job>) {
     // Update the method name
-    return this.jobRepository.find(); // Update the repository method call
+    return this.jobRepository.find({
+      ...attributes,
+    }); // Update the repository method call
   }
 
   public getJob(id: number) {

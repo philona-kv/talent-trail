@@ -9,14 +9,15 @@ import {
 import { JobNotFoundException } from '../exception/job.exception'; // Update the exception class
 
 @Resolver('Job') // Update the resolver name
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class JobResolver {
   // Update the resolver class name
   constructor(private jobService: JobService) {}
 
   @Query()
-  getJobs(): Promise<Job[]> {
+  getJobs(@Args('attributes') attributes: Partial<Job>): Promise<Job[]> {
     // Update the method name and return type
-    return this.jobService.getAllJobs(); // Update the service method call
+    return this.jobService.getAllJobs(attributes); // Update the service method call
   }
 
   @Query()
