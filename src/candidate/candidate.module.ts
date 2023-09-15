@@ -7,6 +7,7 @@ import { ExperiencesService } from './service/experience.service';
 import { Experience } from './entity/experience.entity';
 import { SocialProfileService } from './service/social.profile.service';
 import { ConfigModule } from '@nestjs/config';
+import { CandidateEventConsumer } from './event/candidate.event.consumer';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Candidate, Experience]), ConfigModule],
@@ -15,6 +16,7 @@ import { ConfigModule } from '@nestjs/config';
     CandidateService,
     ExperiencesService,
     SocialProfileService,
+    CandidateEventConsumer,
   ],
   exports: [CandidateService, ExperiencesService, SocialProfileService],
 })

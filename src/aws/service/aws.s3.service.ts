@@ -64,6 +64,10 @@ class SimpleStorageService extends AmazonWebService<S3> {
       }),
     };
   }
+
+  public fetchFile(key: string, bucket = this.DEFAULT_BUCKET) {
+    return this.client.getObject({ Bucket: bucket, Key: key }).promise();
+  }
 }
 
 export { SimpleStorageService as S3Service };

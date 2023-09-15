@@ -11,6 +11,10 @@ import Candidate from '../entity/candidate.entity';
 import { CommonUtil } from '../../common/util/common.util';
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import { CandidateNotFoundException } from '../exception/candidate.exception';
+import { Document } from '../../document/entity/document.entity';
+import { S3Service } from '../../aws/service/aws.s3.service';
+import * as blobUtil from 'blob-util';
+
 @Injectable()
 export class CandidateService {
   private mockarooApi;
@@ -21,6 +25,7 @@ export class CandidateService {
     private candidateRepository: Repository<Candidate>,
     private commonUtil: CommonUtil,
     private configService: ConfigService,
+    private s3Service: S3Service,
   ) {
     this.mockarooApi = this.configService.get('MOCKAROO_API_ENDPOINT');
     this.apiKey = Buffer.from(
@@ -118,5 +123,25 @@ export class CandidateService {
     }
     this.candidateRepository.delete(id);
     return record;
+  }
+
+  public async populateCandidateInfo(data: Document) {
+    const { key, entityId } = data
+    const endpoint = this.configService.get('TALENT_TRAIL_AI_ENDPOINT', '');
+    const url = endpoint.concat('/resume-summary');
+    const file = await this.s3Service.fetchFile(key);
+
+    const formData = new FormData();
+    const fileBlob = blobUtil.createBlob([file.Body], { type: file.ContentType });
+    formData.append('resume', fileBlob, key);
+
+    const info: any = await axios({
+      method: 'POST',
+      url,
+      data: formData,
+      timeout: 10000000,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+    return this.candidateRepository.update(entityId, { info });
   }
 }
