@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import { ConfigService } from '@nestjs/config';
-import { EmailMessage } from './types/mail.send.type';
+import { EmailMessage } from '../types/mail.send.type';
 
 @Injectable()
 export class NotificationService {

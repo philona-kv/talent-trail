@@ -3,12 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Interview from '../entity/interview.entity';
 import { InterviewNotfound } from '../exception/interview.exception';
+import InterviewerVsPreferredSlot from '../entity/interview.preferred.slot.entity';
 
 @Injectable()
 export class InterviewService {
   constructor(
     @InjectRepository(Interview)
     private readonly interviewRepository: Repository<Interview>,
+    @InjectRepository(InterviewerVsPreferredSlot)
+    private readonly interviewSlotRepository: Repository<InterviewerVsPreferredSlot>,
   ) {}
 
   create(interviewData: Partial<Interview>): Promise<Interview> {
@@ -51,5 +54,67 @@ export class InterviewService {
     }
     await this.interviewRepository.delete(id);
     return interview;
+  }
+  async createSlot(
+    interviewSlotData: Partial<InterviewerVsPreferredSlot>,
+  ): Promise<InterviewerVsPreferredSlot> {
+    const interviewSlot =
+      this.interviewSlotRepository.create(interviewSlotData);
+    return this.interviewSlotRepository.save(interviewSlot);
+  }
+
+  async findAllSlot(): Promise<InterviewerVsPreferredSlot[]> {
+    return this.interviewSlotRepository.find();
+  }
+
+  async findOneSlot(
+    userId: number,
+    slotId: number,
+  ): Promise<InterviewerVsPreferredSlot> {
+    const interviewSlot = await this.interviewSlotRepository.findOne({
+      where: {
+        userId,
+        slotId,
+      },
+    });
+    if (!interviewSlot) {
+      throw new NotFoundException(`InterviewSlot with ID  not found`);
+    }
+    return interviewSlot;
+  }
+
+  async updateSlot(
+    interviewSlotData: Partial<InterviewerVsPreferredSlot>,
+  ): Promise<InterviewerVsPreferredSlot> {
+    // const existingRecord = await this.findOneSlot(id);
+    // if (!existingRecord) {
+    //   throw new NotFoundException(`InterviewSlot with ID ${id} not found`);
+    // }
+    // const record = this.interviewSlotRepository.create({
+    //   ...existingRecord,
+    //   ...interviewSlotData,
+    // });
+    await this.interviewSlotRepository.update(
+      { userId: interviewSlotData.userId, slotId: interviewSlotData.slotId },
+      { status: interviewSlotData.status },
+    );
+    return this.findOneSlot(interviewSlotData.userId, interviewSlotData.slotId);
+  }
+
+  async removeSlot(
+    interviewSlotData: Partial<InterviewerVsPreferredSlot>,
+  ): Promise<InterviewerVsPreferredSlot> {
+    const interviewSlot = await this.findOneSlot(
+      interviewSlotData.userId,
+      interviewSlotData.slotId,
+    );
+    if (!interviewSlot) {
+      throw new NotFoundException(`InterviewSlot with ID  not found`);
+    }
+    await this.interviewSlotRepository.delete({
+      userId: interviewSlot.userId,
+      slotId: interviewSlot.slotId,
+    });
+    return interviewSlot;
   }
 }

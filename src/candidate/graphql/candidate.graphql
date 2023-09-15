@@ -29,6 +29,7 @@ input CandidateUpdateInput {
 type Query {
   getCandidates: [Candidate]
   getCandidate(id: Int!): Candidate
+  getHotProfiles(skills: [String]): [Candidate] 
 }
 
 type Mutation {

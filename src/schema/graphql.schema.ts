@@ -66,6 +66,25 @@ export interface CreateInterviewInput {
     prev?: number;
 }
 
+export interface CreateInterviewSlotInput {
+    slotId: number;
+    userId: number;
+    status: string;
+    rejectionReason?: string;
+}
+
+export interface UpdateInterviewSlotInput {
+    slotId: number;
+    userId: number;
+    status?: string;
+    rejectionReason?: string;
+}
+
+export interface GetUniqueInterviewSlotInput {
+    slotId: number;
+    userId: number;
+}
+
 export interface UpdateInterviewInput {
     startDate?: Date;
     endDate?: Date;
@@ -118,10 +137,13 @@ export interface IQuery {
     getCandidate(id: number): Candidate | Promise<Candidate>;
     getDocumentUploadUrl(key: string): DocumentUrlResponse | Promise<DocumentUrlResponse>;
     getDocumentById(id?: number): Document | Promise<Document>;
+    getHotProfiles(skills?: string[]): Candidate[] | Promise<Candidate[]>;
     getEmployees(): Employee[] | Promise<Employee[]>;
     getEmployee(id: number): Employee | Promise<Employee>;
     getAllInterviews(): Interview[] | Promise<Interview[]>;
     getInterview(id: number): Interview | Promise<Interview>;
+    getAllInterviewSlots(): InterviewSlot[] | Promise<InterviewSlot[]>;
+    getInterviewSlot(input?: getUniqueInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
     getJobs(attributes?: JobAttributes): Job[] | Promise<Job[]>;
     getJob(id: number): Job | Promise<Job>;
 }
@@ -145,6 +167,9 @@ export interface IMutation {
     createInterview(input: CreateInterviewInput): Interview | Promise<Interview>;
     updateInterview(id: number, input: UpdateInterviewInput): Interview | Promise<Interview>;
     deleteInterview(id: number): Interview | Promise<Interview>;
+    createInterviewSlot(input: CreateInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
+    updateInterviewSlot(input: UpdateInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
+    deleteInterviewSlot(input?: getUniqueInterviewSlotInput): InterviewSlot | Promise<InterviewSlot>;
     createJob(input?: JobCreateInput): Job | Promise<Job>;
     updateJob(id: number, input?: JobUpdateInput): Job | Promise<Job>;
     deleteJob(id: number): Job | Promise<Job>;
@@ -195,6 +220,13 @@ export interface Interview {
     status: string;
     next?: number;
     prev?: number;
+}
+
+export interface InterviewSlot {
+    slotId: number;
+    userId: number;
+    status: string;
+    rejectionReason?: string;
 }
 
 export interface Location {

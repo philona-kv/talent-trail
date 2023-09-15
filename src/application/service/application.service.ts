@@ -28,7 +28,7 @@ export class ApplicationService {
     });
   }
 
-  async findApplications(filter:ApplicationFilter){
+  async findApplications(filter: ApplicationFilter) {
     return this.applicationRepository.find(filter);
   }
 
