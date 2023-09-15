@@ -1,4 +1,3 @@
-// document.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import BaseEntity from '../../common/entity/base.entity';
 
@@ -10,8 +9,8 @@ export class Document extends BaseEntity {
   @Column()
   entityName: string;
 
-  @Column('uuid')
-  entityId: string;
+  @Column()
+  entityId: number;
 
   @Column()
   key: string;

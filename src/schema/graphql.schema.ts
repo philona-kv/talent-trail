@@ -7,6 +7,12 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export interface ApplicationFilter {
+    applicantId?: number;
+    jobId?: number;
+    referredBy?: number;
+}
+
 export interface LoginInput {
     email: string;
     password: string;
@@ -26,6 +32,13 @@ export interface CandidateUpdateInput {
     email?: string;
     phone?: string;
     password?: string;
+}
+
+export interface CreateDocumentInput {
+    entityName: string;
+    entityId: number;
+    key: string;
+    type: string;
 }
 
 export interface EmployeeCreateInput {
@@ -99,9 +112,12 @@ export interface Application {
 
 export interface IQuery {
     getAllReferred(): Application[] | Promise<Application[]>;
+    findApplications(filter?: ApplicationFilter): Application[] | Promise<Application[]>;
     getLoggedInUser(): User | Promise<User>;
     getCandidates(): Candidate[] | Promise<Candidate[]>;
     getCandidate(id: number): Candidate | Promise<Candidate>;
+    getDocumentUploadUrl(key: string): DocumentUrlResponse | Promise<DocumentUrlResponse>;
+    getDocumentById(id?: number): Document | Promise<Document>;
     getEmployees(): Employee[] | Promise<Employee[]>;
     getEmployee(id: number): Employee | Promise<Employee>;
     getAllInterviews(): Interview[] | Promise<Interview[]>;
@@ -122,6 +138,7 @@ export interface IMutation {
     candidateSignUp(input?: CandidateCreateInput): Candidate | Promise<Candidate>;
     updateCandidate(id: number, input?: CandidateUpdateInput): Candidate | Promise<Candidate>;
     deleteCandidate(id: number): Candidate | Promise<Candidate>;
+    createDocument(input?: CreateDocumentInput): Document | Promise<Document>;
     employeeSignUp(input?: EmployeeCreateInput): Employee | Promise<Employee>;
     updateEmployee(id: number, input?: EmployeeUpdateInput): Employee | Promise<Employee>;
     deleteEmployee(id: number): Employee | Promise<Employee>;
@@ -141,6 +158,21 @@ export interface Candidate {
     phone: string;
     info?: JSON;
     onboardingInfo?: JSON;
+}
+
+export interface Document {
+    id?: number;
+    entityName?: string;
+    entityId?: number;
+    key?: string;
+    type?: string;
+    url?: string;
+}
+
+export interface DocumentUrlResponse {
+    key?: string;
+    url?: string;
+    extension?: string;
 }
 
 export interface Employee {
