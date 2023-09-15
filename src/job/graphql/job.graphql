@@ -26,6 +26,7 @@ input JobCreateInput {
   description: String!
   location:LocationInput
   info: JSON
+  createdBy:String!
 }
 
 input JobUpdateInput {

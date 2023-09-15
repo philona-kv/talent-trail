@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 @Global()
 @Module({
   imports: [TypeOrmModule.forFeature([Candidate, Employee]), ConfigModule],
+  exports: [AuthenticationService],
   providers: [AuthenticationResolver, AuthenticationService],
 })
 export class AuthenticationModule {}

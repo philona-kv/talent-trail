@@ -75,7 +75,7 @@ export interface JobCreateInput {
     description: string;
     location?: LocationInput;
     info?: JSON;
-    createdBy: string;
+    createdBy:number;
 }
 
 export interface JobUpdateInput {
@@ -176,6 +176,7 @@ export interface Job {
     description: string;
     location?: Location;
     info?: JSON;
+    
 }
 
 export type JSON = any;

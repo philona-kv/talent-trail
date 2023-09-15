@@ -8,10 +8,10 @@ class BaseEntity {
   updatedAt?: Date;
 
   @Column({ nullable: true })
-  createdBy?: string;
+  createdBy?: number;
 
   @Column({ nullable: true })
-  updatedBy?: string;
+  updatedBy?: number;
 }
 
 export default BaseEntity;

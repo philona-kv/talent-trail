@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import Job from '../entity/job.entity'; // Update the import path
 import { JobService } from '../service/job.service'; // Update the service import
 import {
@@ -7,7 +7,9 @@ import {
 } from '../../schema/graphql.schema';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { JobNotFoundException } from '../exception/job.exception'; // Update the exception class
+import { Authenticate } from 'src/authentication/decorator/authentication.decorator';
 
+@Authenticate()
 @Resolver('Job') // Update the resolver name
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class JobResolver {
@@ -29,10 +31,11 @@ export class JobResolver {
   @Mutation()
   createJob(
     // Update the mutation name
-    @Args('input') input: JobCreateInput, // Update the argument name
+    @Args('input') input: JobCreateInput, // Update the argument name,
+    @Context('user') user: any,
   ): Promise<Job> {
     // Update the return type
-    return this.jobService.createJob(input); // Update the service method call
+    return this.jobService.createJob({ ...input, createdBy: user.id }); // Update the service method call
   }
 
   @Mutation()
