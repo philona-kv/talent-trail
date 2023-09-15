@@ -44,7 +44,6 @@ export class NotificationService {
     if (template) {
       const htmlContent = render(template, {
         JOB_TITLE: jobTitle,
-        COMPANY_NAME: 'Talent Trail',
         CANDIDATE_NAME: candidateName,
       });
       return this.send({ ...emailInfo, htmlContent });

@@ -158,6 +158,7 @@ export interface IQuery {
 export interface User {
     id?: number;
     email?: string;
+    name?: string;
     groups?: string[];
 }
 
