@@ -11,6 +11,7 @@ export interface ApplicationFilter {
     applicantId?: number;
     jobId?: number;
     referredBy?: number;
+    status?: string;
 }
 
 export interface LoginInput {

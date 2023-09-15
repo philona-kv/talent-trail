@@ -42,5 +42,6 @@ import { AWSModule } from './aws/aws.module';
     JobModule,
     DocumentModule,
   ],
+  providers: [],
 })
 export class AppModule {}

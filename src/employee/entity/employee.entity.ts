@@ -17,6 +17,12 @@ class Employee extends BaseEntity {
 
   @Column()
   password!: string;
+
+  @Column({ type: 'array' })
+  skills: string[];
+
+  @Column()
+  experience:number
 }
 
 export default Employee;
