@@ -1,21 +1,32 @@
 scalar JSON
+type Location{
+  country:String
+  state:String
+}
 
 type Job {
   id: String!
   title: String!
   description: String!
+  location:Location
   info: JSON
+}
+input LocationInput{
+  country:String
+  state:String
 }
 
 input JobCreateInput {
   title: String!
   description: String!
+  location:LocationInput
   info: JSON
 }
 
 input JobUpdateInput {
   title: String!
   description: String!
+  location:LocationInput
   info: JSON
 }
 

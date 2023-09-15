@@ -59,15 +59,22 @@ export interface UpdateInterviewInput {
     status?: string;
 }
 
+export interface LocationInput {
+    country?: string;
+    state?: string;
+}
+
 export interface JobCreateInput {
     title: string;
     description: string;
+    location?: LocationInput;
     info?: JSON;
 }
 
 export interface JobUpdateInput {
     title: string;
     description: string;
+    location?: LocationInput;
     info?: JSON;
 }
 
@@ -78,8 +85,9 @@ export interface Application {
     referredBy?: string;
     status: string;
     appliedDate?: Date;
-    candidate?: JSON;
-    referrer?: JSON;
+    candidate: Candidate;
+    referrer?: Employee;
+    job?: Job;
 }
 
 export interface IQuery {
@@ -143,10 +151,16 @@ export interface Interview {
     prev?: number;
 }
 
+export interface Location {
+    country?: string;
+    state?: string;
+}
+
 export interface Job {
     id: string;
     title: string;
     description: string;
+    location?: Location;
     info?: JSON;
 }
 
