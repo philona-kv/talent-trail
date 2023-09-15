@@ -118,6 +118,7 @@ export interface IQuery {
     getCandidate(id: number): Candidate | Promise<Candidate>;
     getDocumentUploadUrl(key: string): DocumentUrlResponse | Promise<DocumentUrlResponse>;
     getDocumentById(id?: number): Document | Promise<Document>;
+    getHotProfiles(skills?: string[]): Candidate[] | Promise<Candidate[]>;
     getEmployees(): Employee[] | Promise<Employee[]>;
     getEmployee(id: number): Employee | Promise<Employee>;
     getAllInterviews(): Interview[] | Promise<Interview[]>;
