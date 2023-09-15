@@ -13,7 +13,6 @@ import Employee from '../../employee/entity/employee.entity';
 import { LoginInput } from '../../schema/graphql.schema';
 import { GroupNames } from '../../common/constants/group.constants';
 import { CommonUtil } from '../../common/util/common.util';
-import e from 'express';
 
 @Injectable()
 export class AuthenticationService {
@@ -47,27 +46,6 @@ export class AuthenticationService {
       return this.generateToken(candidate, [GroupNames.CANDIDATE]);
     }
     throw new BadRequestException(`Invalid credentials`);
-  }
-
-  private getCookieConfiguration() {
-    return {
-      httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
-      maxAge: this.configService.get('COOKIE_EXPIRY'),
-    };
-  }
-
-  setCookie(resp: any, token: any) {
-    const name = this.configService.get('COOKIE_NAME');
-    resp.cookie(name, token, this.getCookieConfiguration());
-    return resp;
-  }
-
-  clearCookie(resp: any) {
-    const name = this.configService.get('COOKIE_NAME');
-    resp.clearCookie(name, this.getCookieConfiguration());
-    return resp;
   }
 
   generateToken(user: any, groups: string[]) {

@@ -8,18 +8,12 @@ export class AuthenticationResolver {
   constructor(private authenticationService: AuthenticationService) {}
 
   @Mutation()
-  async login(
-    @Args('input') input: LoginInput,
-    @Context('res') res: any,
-  ): Promise<string> {
-    const token = await this.authenticationService.login(input);
-    this.authenticationService.setCookie(res, token);
-    return token;
+  login(@Args('input') input: LoginInput): Promise<string> {
+    return this.authenticationService.login(input);
   }
 
   @Mutation()
-  logout(@Context('res') res: any): string {
-    this.authenticationService.clearCookie(res);
+  logout(): string {
     return 'User successfully logged out';
   }
 
