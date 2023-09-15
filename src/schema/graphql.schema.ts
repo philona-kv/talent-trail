@@ -1,3 +1,4 @@
+
 /*
  * ------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -155,6 +156,7 @@ export interface IQuery {
 export interface User {
     id?: number;
     email?: string;
+    name?: string;
     groups?: string[];
 }
 
