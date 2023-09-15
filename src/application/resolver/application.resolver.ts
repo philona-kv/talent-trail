@@ -4,6 +4,7 @@ import { EmployeeService } from '../../employee/service/employee.service';
 import Application from '../entity/application.entity';
 import { CandidateService } from '../../candidate/service/candidate.service';
 import { JobService } from '../../job/service/job.service';
+import { ApplicationFilter } from '../../schema/graphql.schema';
 
 @Resolver('Application')
 export class ApplicationResolver {
@@ -16,6 +17,11 @@ export class ApplicationResolver {
   @Query()
   getAllReferred() {
     return this.applicationService.findAllReferred();
+  }
+
+  @Query()
+  findApplications(filter?:ApplicationFilter){
+    return this.applicationService.findApplications(filter);
   }
 
   @ResolveField('referrer')
