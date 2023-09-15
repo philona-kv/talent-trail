@@ -1,7 +1,12 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 
 export class RequestUtil {
-   static async sendRequest<T>(method: Method, url: string, data?: any, headers?: any) {
+  static async sendRequest<T>(
+    method: Method,
+    url: string,
+    data?: any,
+    headers?: any,
+  ) {
     try {
       const config: AxiosRequestConfig = {
         method,

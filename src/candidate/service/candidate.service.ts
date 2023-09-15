@@ -44,7 +44,7 @@ export class CandidateService {
         timeout: 10000,
         headers: { ...(await this.getHeader()) },
       };
-      
+
       const response: AxiosResponse<T> = await axios(config);
       return { isSuccess: true, data: response.data };
     } catch (error) {
@@ -69,16 +69,19 @@ export class CandidateService {
   }
 
   public async getHotProfiles(skills: string[]) {
-    const mockedData = await this.makeRequest<any>('GET', `${this.mockarooApi+this.apiKey}`);
-    const data: CandidateGql[] = []
-    mockedData.data.map(md => {
+    const mockedData = await this.makeRequest<any>(
+      'GET',
+      `${this.mockarooApi + this.apiKey}`,
+    );
+    const data: CandidateGql[] = [];
+    mockedData.data.map((md) => {
       data.push({
         name: `${md.first_name} ${md.last_name}`,
         age: this.getRandomNumber(20, 30),
         email: md.email,
         id: md.id,
         phone: md.phone,
-      })
+      });
     });
     return data;
   }

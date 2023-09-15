@@ -21,9 +21,7 @@ export class CandidateResolver {
   }
 
   @Query()
-  getHotProfiles(
-    @Args('skills') skills: string[]
-  ) {
+  getHotProfiles(@Args('skills') skills: string[]) {
     return this.candidateService.getHotProfiles(skills);
   }
 

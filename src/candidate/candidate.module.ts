@@ -10,7 +10,12 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Candidate, Experience]), ConfigModule],
-  providers: [CandidateResolver, CandidateService, ExperiencesService,SocialProfileService],
-  exports: [CandidateService, ExperiencesService,SocialProfileService],
+  providers: [
+    CandidateResolver,
+    CandidateService,
+    ExperiencesService,
+    SocialProfileService,
+  ],
+  exports: [CandidateService, ExperiencesService, SocialProfileService],
 })
 export class CandidateModule {}
