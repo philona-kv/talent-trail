@@ -1,3 +1,4 @@
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import * as Joi from '@hapi/joi';
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from './database/database.module';
@@ -17,6 +18,7 @@ import { AWSModule } from './aws/aws.module';
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot({ wildcard: true }),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
