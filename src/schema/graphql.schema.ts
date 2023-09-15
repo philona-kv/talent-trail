@@ -7,6 +7,10 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export enum DocumentType {
+    RESUME = "RESUME"
+}
+
 export interface ApplicationFilter {
     applicantId?: number;
     jobId?: number;
@@ -38,7 +42,7 @@ export interface CreateDocumentInput {
     entityName: string;
     entityId: number;
     key: string;
-    type: string;
+    type: DocumentType;
 }
 
 export interface EmployeeCreateInput {
