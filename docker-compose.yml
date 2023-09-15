@@ -38,10 +38,10 @@ services:
       "
         sleep 20
         # Executing SQS
-        aws sqs create-queue --endpoint-url=http://localstack:4566 --queue-name job-hunter;
+        aws sqs create-queue --endpoint-url=http://localstack:4566 --queue-name talent-trail;
 
         # Creating S3
-        aws --endpoint-url=http://localstack:4566 s3 mb s3://job-hunter
+        aws --endpoint-url=http://localstack:4566 s3 mb s3://talent-trail
       "
     depends_on:
       - localstack
