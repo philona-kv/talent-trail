@@ -20,6 +20,13 @@ export class CandidateResolver {
     return this.candidateService.getCandidate(id);
   }
 
+  @Query()
+  getHotProfiles(
+    @Args('skills') skills: string[]
+  ) {
+    return this.candidateService.getHotProfiles(skills);
+  }
+
   @Mutation()
   candidateSignUp(
     @Args('input') input: CandidateCreateInput,
