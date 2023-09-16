@@ -28,6 +28,6 @@ export class DocumentResolver {
 
   @ResolveField('url')
   __presignedUrl(document: Document) {
-    return this.s3Service.generatePresignedUrlForGet(document.key);
+    // return this.s3Service.generatePresignedUrlForGet(document.key);
   }
 }

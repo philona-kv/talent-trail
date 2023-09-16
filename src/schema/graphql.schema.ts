@@ -141,6 +141,7 @@ export interface Application {
     referrer?: Employee;
     job?: Job;
     timeline?: JSON;
+    score?: number;
 }
 
 export interface IQuery {

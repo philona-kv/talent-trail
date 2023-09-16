@@ -229,7 +229,8 @@ getRandomSkills(n:number){
   public getAllJobs(attributes: Partial<Job>) {
     // Update the method name
     return this.jobRepository.find({
-      ...attributes,
+      where: attributes,
+      order: { id: 'ASC' }
     }); // Update the repository method call
   }
 

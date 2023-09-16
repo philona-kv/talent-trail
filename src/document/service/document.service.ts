@@ -19,7 +19,7 @@ export class DocumentService {
       document.type == DocumentType.RESUME &&
       document.entityName === 'CANDIDATE'
     ) {
-      this.eventEmitter.emit('resume.upload', document);
+      // this.eventEmitter.emit('resume.upload', document);
     }
     return this.documentRepository.save(document);
   }
