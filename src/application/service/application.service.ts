@@ -12,6 +12,7 @@ import { Status } from '../constants/application.constants';
 import { CandidateService } from '../../candidate/service/candidate.service';
 import { EmployeeService } from '../../employee/service/employee.service';
 import { InterviewService } from '../../interview/service/interview.service';
+import { orderBy } from 'lodash';
 
 @Injectable()
 export class ApplicationService {
@@ -62,7 +63,12 @@ export class ApplicationService {
   }
 
   async findApplications(filter: ApplicationFilter) {
-    return this.applicationRepository.find(filter);
+    return this.applicationRepository.find({
+      where: filter,
+      order: {
+        score: 'DESC'
+      }
+    });
   }
 
   async findByReferredBy(referredBy: number): Promise<Application[]> {

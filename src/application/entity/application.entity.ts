@@ -23,6 +23,9 @@ class Application extends BaseEntity {
 
   @Column({ type: 'jsonb', nullable: true })
   timeline?: any;
+
+  @Column({ nullable: true })
+  score?: number;
 }
 
 export default Application;
