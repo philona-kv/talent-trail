@@ -15,6 +15,8 @@ import Application from '../application/entity/application.entity';
 import { EmployeeService } from '../employee/service/employee.service';
 import Employee from '../employee/entity/employee.entity';
 import { InterviewSchedulerService } from './service/interview.scheduler.service';
+import { NotificationService } from '../notification/service/notification.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Global()
 @Module({
@@ -31,6 +33,7 @@ import { InterviewSchedulerService } from './service/interview.scheduler.service
     CandidateModule,
     JobModule,
     ApplicationModule,
+    ConfigModule,
   ],
   providers: [
     InterviewResolver,
@@ -38,6 +41,7 @@ import { InterviewSchedulerService } from './service/interview.scheduler.service
     ApplicationService,
     EmployeeService,
     InterviewSchedulerService,
+    NotificationService,
   ],
   exports: [InterviewService],
 })

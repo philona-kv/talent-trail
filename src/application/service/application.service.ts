@@ -13,6 +13,9 @@ import { CandidateService } from '../../candidate/service/candidate.service';
 import { EmployeeService } from '../../employee/service/employee.service';
 import { InterviewService } from '../../interview/service/interview.service';
 import { orderBy } from 'lodash';
+import { NotificationService } from '../../notification/service/notification.service';
+import { MailType } from '../../notification/types/mail.send.type';
+import { JobService } from '../../job/service/job.service';
 
 @Injectable()
 export class ApplicationService {
@@ -22,6 +25,8 @@ export class ApplicationService {
     private readonly interviewService: InterviewService,
     private readonly candidateService: CandidateService,
     private readonly employeeService: EmployeeService,
+    private readonly notificationService: NotificationService,
+    private readonly jobService: JobService,
   ) {}
 
   async create(applicationData: Partial<Application>): Promise<Application> {
@@ -66,8 +71,8 @@ export class ApplicationService {
     return this.applicationRepository.find({
       where: filter,
       order: {
-        score: 'DESC'
-      }
+        score: 'DESC',
+      },
     });
   }
 
@@ -98,6 +103,7 @@ export class ApplicationService {
     const candidate = await this.candidateService.getCandidate(
       application.candidateId,
     );
+    const job = await this.jobService.getJob(application.jobId);
     const employee = await this.employeeService.getEmployee(employeeId);
     if (accepted) {
       application.status = Status.HR_ACCEPTED;
@@ -129,7 +135,23 @@ export class ApplicationService {
           tl.message = `${candidate.name} is rejected by ${employee.name}`;
         }
       });
-      // TO-DO: send rejection mail
+      this.notificationService.sendEmail(
+        {
+          sender: {
+            name: 'Ashish Kumar',
+            email: 'ashishsk93@gmail.com',
+          },
+          to: [
+            {
+              name: candidate.name,
+              email: candidate.email,
+            },
+          ],
+          subject: 'Thanks for Applying',
+        },
+        MailType.REJECTED,
+        job.title,
+      );
     }
     return await this.applicationRepository.save(application);
   }
@@ -187,7 +209,6 @@ export class ApplicationService {
           tl.message = `Interviewer Rejected the interview with ${candidate.name}`;
         }
       });
-      // TO-DO: Reassign the interview to another employee
       application.timeline.push({
         date: currenDate,
         action: Status.PENDING_INTERVIEWER_CONFIRMATION,
@@ -200,6 +221,7 @@ export class ApplicationService {
   async submitFeedback(id: number, interviewId: number, qualified: boolean) {
     const application = await this.findOne(id);
     const currenDate = new Date();
+    const job = await this.jobService.getJob(application.jobId);
     const interview = await this.interviewService.findOne(interviewId);
     const candidate = await this.candidateService.getCandidate(
       application.candidateId,
@@ -208,8 +230,7 @@ export class ApplicationService {
       interview.employeeId,
     );
     if (qualified) {
-      if (false) {
-        // if round < maxround in config
+      if (interview.round < 3) {
         const preferredSlot = await this.interviewService.askForPreferredSlot(
           interview.round + 1,
           candidate.id,
@@ -236,6 +257,23 @@ export class ApplicationService {
         message: `Candidate ${candidate.name} rejected by ${employee.name}`,
         round: interview.round,
       });
+      this.notificationService.sendEmail(
+        {
+          sender: {
+            name: 'Ashish Kumar',
+            email: 'ashishsk93@gmail.com',
+          },
+          to: [
+            {
+              name: candidate.name,
+              email: candidate.email,
+            },
+          ],
+          subject: 'Thanks for Applying',
+        },
+        MailType.REJECTED,
+        job.title,
+      );
     }
   }
 

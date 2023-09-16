@@ -8,17 +8,15 @@ import {
 } from '../../schema/graphql.schema';
 import { JobNotFoundException } from '../exception/job.exception'; // Update the exception class
 import { CommonUtil } from '../../common/util/common.util';
-import * as Chance from 'chance'
-import * as _ from 'lodash'
+import * as Chance from 'chance';
+import * as _ from 'lodash';
 
 const chance = new Chance();
 @Injectable()
 export class JobService {
-
-
-  generateRandomJobDescriptions(job:string){
+  generateRandomJobDescriptions(job: string) {
     const descriptions = {
-      'Software Engineer':`As a Software Engineer at [Your Company Name], you will play a crucial role in the development and enhancement of our software products. You'll work closely with our cross-functional teams to design, develop, test, and deploy software solutions that meet the needs of our clients. This role offers an exciting opportunity to contribute to the entire software development lifecycle.
+      'Software Engineer': `As a Software Engineer at [Your Company Name], you will play a crucial role in the development and enhancement of our software products. You'll work closely with our cross-functional teams to design, develop, test, and deploy software solutions that meet the needs of our clients. This role offers an exciting opportunity to contribute to the entire software development lifecycle.
 
       Responsibilities:
       
@@ -46,7 +44,7 @@ export class JobService {
       Opportunities for professional growth and development.
       Friendly and collaborative work environment.
       [Other benefits your company offers].`,
-      'Data Analyst':`As a Data Analyst at [Your Company Name], you will be responsible for collecting, interpreting, and analyzing data to provide valuable insights to our clients and internal teams. You will work with a wide range of data sources and use data visualization tools to communicate your findings effectively.
+      'Data Analyst': `As a Data Analyst at [Your Company Name], you will be responsible for collecting, interpreting, and analyzing data to provide valuable insights to our clients and internal teams. You will work with a wide range of data sources and use data visualization tools to communicate your findings effectively.
 
       Responsibilities:
       
@@ -74,7 +72,7 @@ export class JobService {
       Competitive compensation package.
       Opportunities for professional development and training.
       Collaborative and inclusive work environment.`,
-      'UI Designer':`As a UI Designer at [Your Company Name], you will be responsible for translating user needs and business goals into visually appealing and user-friendly interfaces. You'll collaborate closely with UX designers, developers, and stakeholders to create designs that elevate our products.
+      'UI Designer': `As a UI Designer at [Your Company Name], you will be responsible for translating user needs and business goals into visually appealing and user-friendly interfaces. You'll collaborate closely with UX designers, developers, and stakeholders to create designs that elevate our products.
 
       Responsibilities:
       
@@ -101,7 +99,7 @@ export class JobService {
       Competitive salary and benefits package.
       Opportunities for career growth and skill development.
       Creative and inclusive work culture.`,
-      'Product Manager':`As a Product Manager at [Your Company Name], you will take ownership of the entire product lifecycle, from defining the product vision to driving its execution. You'll work closely with cross-functional teams to ensure that our products meet customer needs and achieve business objectives.
+      'Product Manager': `As a Product Manager at [Your Company Name], you will take ownership of the entire product lifecycle, from defining the product vision to driving its execution. You'll work closely with cross-functional teams to ensure that our products meet customer needs and achieve business objectives.
 
       Responsibilities:
       
@@ -128,7 +126,7 @@ export class JobService {
       Competitive compensation and benefits package.
       Professional development and training opportunities.
       Collaborative and innovative work environment.`,
-      'DevOps Engineer':`As a DevOps Engineer at [Your Company Name], you will play a pivotal role in automating deployment processes, managing infrastructure, and optimizing system performance. You'll work closely with development and operations teams to ensure seamless software delivery.
+      'DevOps Engineer': `As a DevOps Engineer at [Your Company Name], you will play a pivotal role in automating deployment processes, managing infrastructure, and optimizing system performance. You'll work closely with development and operations teams to ensure seamless software delivery.
 
       Responsibilities:
       
@@ -154,70 +152,64 @@ export class JobService {
       
       Competitive salary and comprehensive benefits package.
       Opportunities for professional growth and certification.
-      Collaborative and forward-thinking work culture.`
+      Collaborative and forward-thinking work culture.`,
+    };
+    return descriptions[job];
+  }
 
-  }  
-  return descriptions[job]; 
-}
-
-getRandomSkills(n:number){
-
-  const skills =['JAVA','JAVASCRIPT','CPP','DOCKER','JIRA','SCRUM']
-  return _.sampleSize(skills,n)
-
-}
+  getRandomSkills(n: number) {
+    const skills = ['JAVA', 'JAVASCRIPT', 'CPP', 'DOCKER', 'JIRA', 'SCRUM'];
+    return _.sampleSize(skills, n);
+  }
 
   // Function to generate a random job title
- generateRandomJobTitle() {
-  const jobTitles = [
-    'Software Engineer',
-    'Data Analyst',
-    'UI Designer',
-    'Product Manager',
-    'DevOps Engineer',
-    // Add more job titles as needed
-  ];
-  return chance.pickone(jobTitles);
-}
+  generateRandomJobTitle() {
+    const jobTitles = [
+      'Software Engineer',
+      'Data Analyst',
+      'UI Designer',
+      'Product Manager',
+      'DevOps Engineer',
+      // Add more job titles as needed
+    ];
+    return chance.pickone(jobTitles);
+  }
 
   // Generate a random job
- generateRandomJob() {
-  const title = this.generateRandomJobTitle();
-  const description = this.generateRandomJobDescriptions(title);
-  const state = chance.state();
-  const country = chance.country();
-  const skills = this.getRandomSkills(chance.integer({ min: 1, max: 4}))
-  const experience = chance.integer({ min: 1, max: 10 });
-  const detailedDescription = chance.paragraph();
-  const categoryId = chance.integer({ min: 1, max: 5 });
+  generateRandomJob() {
+    const title = this.generateRandomJobTitle();
+    const description = this.generateRandomJobDescriptions(title);
+    const state = chance.state();
+    const country = chance.country();
+    const skills = this.getRandomSkills(chance.integer({ min: 1, max: 4 }));
+    const experience = chance.integer({ min: 1, max: 10 });
+    const detailedDescription = chance.paragraph();
+    const categoryId = chance.integer({ min: 1, max: 5 });
 
-  return {
-    title,
-    description,
-    categoryId,
-    location: {
-      state,
-      country,
-    },
-    info: {
-      skills,
-      experience,
-      detailedDescription,
-    },
-  } as Job;
-}
+    return {
+      title,
+      description,
+      categoryId,
+      location: {
+        state,
+        country,
+      },
+      info: {
+        skills,
+        experience,
+        detailedDescription,
+      },
+    } as Job;
+  }
 
   async mockData() {
-    
-    
     // Generate 100 mock job data entries
-    const mockJobData:Job[] = [];
+    const mockJobData: Job[] = [];
     for (let i = 0; i < 30; i++) {
       const job = this.generateRandomJob();
       mockJobData.push(job);
     }
     return await this.jobRepository.save(mockJobData);
-    
   }
   // Update the service class name
   constructor(
@@ -230,7 +222,7 @@ getRandomSkills(n:number){
     // Update the method name
     return this.jobRepository.find({
       where: attributes,
-      order: { id: 'ASC' }
+      order: { id: 'ASC' },
     }); // Update the repository method call
   }
 

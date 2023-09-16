@@ -71,9 +71,8 @@ export class JobResolver {
     return applications.length;
   }
 
-  
   @Mutation()
-  mockJob(){
+  mockJob() {
     return this.jobService.mockData();
   }
 }

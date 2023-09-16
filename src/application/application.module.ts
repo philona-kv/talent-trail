@@ -7,6 +7,8 @@ import { EmployeeModule } from '../employee/employee.module';
 import { CandidateModule } from '../candidate/candidate.module';
 import { JobModule } from '../job/job.module';
 import { InterviewModule } from '../interview/interview.module';
+import { NotificationService } from '../notification/service/notification.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Global()
 @Module({
@@ -15,8 +17,9 @@ import { InterviewModule } from '../interview/interview.module';
     EmployeeModule,
     CandidateModule,
     JobModule,
+    ConfigModule,
   ],
-  providers: [ApplicationService, ApplicationResolver],
+  providers: [ApplicationService, ApplicationResolver, NotificationService],
   exports: [ApplicationService],
 })
 export class ApplicationModule {}
